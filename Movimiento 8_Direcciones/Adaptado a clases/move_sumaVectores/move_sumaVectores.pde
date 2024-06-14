@@ -9,14 +9,14 @@ private Player jugador;
 
 public void setup() {
   size(1000, 700);
-  jugador = new Player(new PVector(width/2, height/8));
+  jugador = new Player(new PVector(width/2, height/2));
 }
 
 public void draw() {
   background(100);
   println(frameRate);
-  jugador.move();
-  jugador.display();
+  jugador.display(); 
+  jugador.move(); 
 }
 
 public void keyPressed() {

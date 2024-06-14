@@ -17,13 +17,12 @@ class Player extends GameObject {
     this.deceleration = 10;
     this.topSpeed = 250;
 
-    this.direccion = new Vector();
+    this.direccion = new Vector(this.position,"down");
   }
 
   public void display() {
-    fill(200);
+    fill(200,30);
     circle(this.position.x, this.position.y, radio*2);
-
     textSize(50);
     fill(255);
   }
@@ -31,7 +30,6 @@ class Player extends GameObject {
   public void move() {
     velocity = W_PRESSED || D_PRESSED || S_PRESSED || A_PRESSED ? velocity+acceleration : velocity-deceleration;
     
-    this.direccion.setOrigen(this.position);
     if (W_PRESSED) {
       this.direccion = this.direccion.sumar(new Vector(this.position, "up"));
     }
@@ -52,14 +50,16 @@ class Player extends GameObject {
     // Limitar la velocidad
     velocity = constrain(velocity, 0, topSpeed);
 
-    text("Aceleracion: "+acceleration, 30, 40);
-    text("Velocidad: "+velocity, 30, 80);
-    text("this.direccion origen:"+this.direccion.origen,30,130);
-
     //this.position.x += this.direccion.getDestino().x * velocity * Time.getDeltaTime(frameRate);
     //this.position.y += this.direccion.getDestino().y * velocity * Time.getDeltaTime(frameRate);
 
-    this.position.add(this.direccion.getDestino().mult(velocity * Time.getDeltaTime(frameRate)));
+    // Usando copy porque sino me cambia la direccion
+    this.position.add(this.direccion.getDestino().copy().mult(velocity * Time.getDeltaTime(frameRate)));
+    
+    text("Aceleracion: "+acceleration, 30, 40);
+    text("Velocidad: "+velocity, 30, 80);
+    text("this.direccion origen:"+this.direccion.destino,30,130);
+
   }
 
   /**-------------------------Seccion metodos accesores-------------------------*/
