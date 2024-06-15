@@ -13,26 +13,26 @@ class Dungeon {
     generateRooms();
   }
   
-  void generateRooms() {
-    for (int i = 0; i < rows; i++) {
-      for (int j = 0; j < cols; j++) {
-        rooms[i][j] = new Room(matriz[i][j], j * roomSize, i * roomSize, roomSize);
+  public void generateRooms() {
+    for (int i = 0; i < this.rows; i++) {
+      for (int j = 0; j < this.cols; j++) {
+        this.rooms[i][j] = new Room(matriz[i][j], j * this.roomSize+espacio, i * this.roomSize+espacio, this.roomSize);
       }
     }
   }
   
-  void display() {
-    for (int i = 0; i < rows; i++) {
-      for (int j = 0; j < cols; j++) {
-        rooms[i][j].display();
+  public void display() {
+    for (int i = 0; i < this.rows; i++) {
+      for (int j = 0; j < this.cols; j++) {
+        this.rooms[i][j].display();
       }
     }
   }
   
   // Debuelve el objeto habitacion segun la columna y fila solicitada dentro del limite de la matriz
-  Room getRoom(int col, int row) {
+  public Room getRoom(int col, int row) {
     if (col >= 0 && col < cols && row >= 0 && row < rows) {
-      return rooms[row][col];
+      return this.rooms[row][col];
     }
     println("Room Inexistente por estar fuera de rango");
     return null;

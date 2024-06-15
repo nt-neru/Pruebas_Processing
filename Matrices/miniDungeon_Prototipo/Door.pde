@@ -1,10 +1,10 @@
 
 class Door {
-  int x, y;
+  float x, y;
   String direction;
   int radius = 10;
   
-  Door(int x, int y, String direction) {
+  Door(float x, float y, String direction) {
     this.x = x;
     this.y = y;
     this.direction = direction;

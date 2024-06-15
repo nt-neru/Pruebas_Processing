@@ -1,10 +1,10 @@
 
 class Room {
   int doors;  // Representa las posiciones de las puertas en binario
-  int x, y, size;
+  float x, y, size;
   Door[] doorList; // lista de puertas que tiene la room
   
-  Room(int doors, int x, int y, int size) {
+  Room(int doors, float x, float y, float size) {
     this.doors = doors;
     this.x = x;
     this.y = y;
