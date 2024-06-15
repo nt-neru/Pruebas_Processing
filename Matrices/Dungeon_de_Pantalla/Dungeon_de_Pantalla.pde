@@ -1,20 +1,12 @@
-// -------------------------juego ---------------------//
-int[][] prueba = {
-  {2, 14, 11, 0},
-  {0, 3, 11, 8}
-};
-
-int[][] level1 = {
-  {2, 14, 12, 0},
-  {0, 3, 11, 8}
-};
+/** Variables globales */
+int nivel = 2;
 
 Dungeon dungeon;
 Player player;
 
 void setup() {
   size(500, 400);
-  dungeon = new Dungeon(level1, width+1); // Cada habitación ocupará el tamaño de la pantalla
+  dungeon = new Dungeon(nivel, width+1); // Cada habitación ocupará el tamaño de la pantalla
   player = new Player(width / 2, height / 2, 20, 10); // Inicia en el centro de la primera habitación
 }
 

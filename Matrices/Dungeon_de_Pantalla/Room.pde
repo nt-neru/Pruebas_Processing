@@ -34,7 +34,7 @@ class Room {
     for (Door door : doorList) {
       if (door != null) return true; // verifica si el objeto door no es null.
     }
-    println("no hay puertas :c");
+    println("no hay puertas!! estas encerrado!! >:3");
     return false;
   }
 }
