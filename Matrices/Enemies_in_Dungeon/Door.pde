@@ -4,6 +4,8 @@ class Door extends GameObject {
   private String direction;
   /** Representa el estado de la puerta, si esta abierta o cerrada */
   private boolean isOpen;
+  
+  private Collider collider;
 
   /* -- CONSTRUCTORES -- */
   /** Constructor por defecto */
@@ -12,24 +14,21 @@ class Door extends GameObject {
     this.ancho = 60;
     this.direction = direction;
     this.isOpen = true;
+    this.collider = new Collider(this.posicion,this.ancho);
   }
   /* -- METODOS -- */
   /** Metodo que dibuja a la habitacion*/
   public void display() {
-    stroke(0);
+    noStroke();
     if (isOpen) {
       fill(0, 255, 0); // Color verde para puertas abiertas
     } else {
       fill(255, 0, 0); // Color rojo para puertas cerradas
     }
     circle(this.posicion.x, this.posicion.y, this.ancho);
+    collider.displayCircle(#150C6C);
   }
 
-  /** Metodo que devuelve si la puerta coliciono o no con un objeto Player */
-  public boolean isColliding(Player player) {
-    float distance = dist(this.posicion.x, this.posicion.y, player.posicion.x, player.posicion.y);
-    return distance < (this.ancho + player.ancho) / 2 && isOpen;
-  }
   /* -- ASESORES -- */
   /* Getters */
   /** Devuelve el nombre de la direccion en donde se encuentra la puerta*/
@@ -39,6 +38,10 @@ class Door extends GameObject {
   /** Devuelve si la puerta esta abierta */
   public boolean getIsOpen() {
     return this.isOpen;
+  }
+  /** Devuelve el colisionador */
+  public Collider getCollider() {
+    return this.collider;
   }
 
   /* Setings */

@@ -58,17 +58,17 @@ class Dungeon {
     Room roomActual = dungeon.getRoom(jugador.col, jugador.row);
     if (roomActual != null) { // si existe:
       roomActual.display();
-      roomActual.updateDoors(enemies.getEnemies());
+      roomActual.updateDoors(enemies.hayEnemigos());
       // Verificar colisiones con las puertas
       jugador.checkCollisions(roomActual, enemies);
-      enemies.checkEnemyCollision(jugador);
+      enemies.checkPlayerCollision(jugador);
     }
   }
 
   public int nameRoom(int row, int col) {
     return this.rooms[row][col].getNameRoom();
   }
-
+  
   /* Metodo que devuelve el objeto habitacion */
   public Room getRoom(int col, int row) {
     // segun si la columna y fila solicitada estan dentro del limite de la matriz
@@ -78,5 +78,15 @@ class Dungeon {
     }
     println("Room Inexistente por estar fuera de rango");
     return null;
+  }
+  /* -- ASESORES -- */
+  /* Getters */
+  /** Devuelve el numero de columnas */
+  public int getCols(){
+    return this.cols;
+  }
+  /** Devuelve el numero de columnas */
+  public int getRows(){
+    return this.rows;
   }
 }

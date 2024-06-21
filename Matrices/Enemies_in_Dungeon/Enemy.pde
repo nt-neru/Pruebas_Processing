@@ -4,6 +4,7 @@ class Enemy extends GameObject{
   protected float acceleration;
   protected float topSpeed; 
   protected int lives;
+  protected Collider collider;
   
   public Enemy(){
     this.posicion = new PVector(random(width-(width/3))+width/6,random(height- (height/2))+height/4);
@@ -12,13 +13,17 @@ class Enemy extends GameObject{
     this.acceleration = 30;
     this.topSpeed= random(200,400);
     this.lives = 5;
+    this.collider = new Collider(this.posicion,this.ancho);
   }
   
   public void display(){
+    noStroke();
     fill(255,255,0);
     circle(this.posicion.x,this.posicion.y,this.ancho);
     fill(0);
     text(lives,this.posicion.x, this.posicion.y);
+    collider.setPosicion(this.posicion);
+    collider.displayCircle(0);
   }
   public void move(){
     
@@ -41,13 +46,11 @@ class Enemy extends GameObject{
     this.posicion.y = constrain(this.posicion.y, 0 + this.ancho, height - this.ancho);
   }
   
-  boolean collider(Player jugador){
-    float dist = dist(this.posicion.x, this.posicion.y, jugador.posicion.x, jugador.posicion.y);
-    return dist < (this.ancho + jugador.ancho )/2;
-  }
-  
   public int getLives(){
     return lives;
+  }
+  public Collider getCollider(){
+    return this.collider;
   }
   public void setLives(int lives){
     this.lives=lives;

@@ -2,22 +2,22 @@
 class EnemyManager {
   /** representa a los enemigos de una habitacion*/
   private ArrayList<Enemy> enemies;
-  /***/
+  /** Verifica si los enemigos estubieron fueron generados en X room*/
   private boolean[] enemigosGenerados;
 
-  public EnemyManager() {
-    enemies= new ArrayList();
-    enemigosGenerados = new boolean[8]; // por defecto se inicializan en falso
+  public EnemyManager(int tamanio) {
+    this.enemies= new ArrayList();
+    this.enemigosGenerados = new boolean[tamanio]; // Por defecto se inicializan en falso
   }
 
   public void createEnemies(Room room) {
     removeEnemies();
     // Verificar si los enemigos ya han sido generados para esta habitación
-    if (enemigosGenerados[room.getNameRoom() ]) { // nameRoom - 1 porque los índices en el array comienzan desde 0
+    if (this.enemigosGenerados[room.getNameRoom()]) {
       return; // Salir si ya han sido generados
     }
     generarFormacion(room.getNameRoom());
-    room.stateDoors(false);
+    room.stateDoors(false); // hay enemigos cerrar puertas
   }
 
   public void generarFormacion(int nameRoom) {
@@ -29,7 +29,7 @@ class EnemyManager {
         for (int i=0; i<cantidadEnemies; i++) {
           e= new Enemy();
           e.setPosicion(new PVector((i+1)*width/(cantidadEnemies+1), height/2));
-          enemies.add(e);
+          this.enemies.add(e);
         }
         break;
       }
@@ -39,7 +39,7 @@ class EnemyManager {
         for (int i=0; i<cantidadEnemies; i++) {
           e= new Enemy();
           e.setPosicion(new PVector((i+1)*width/(cantidadEnemies+1), height/4));
-          enemies.add(e);
+          this.enemies.add(e);
         }
         break;
       }
@@ -49,7 +49,7 @@ class EnemyManager {
       break;
     }//end Switch
     // Marcar la habitación como generada
-    enemigosGenerados[nameRoom - 1] = true; // nameRoom - 1 porque los índices en el array comienzan desde 0
+    this.enemigosGenerados[nameRoom] = true;
   }
 
   /** Dibuja a los enemigos */
@@ -58,14 +58,24 @@ class EnemyManager {
       e.display();
     }
   }
-  
-  public void checkEnemyCollision(Player jugador){
-    for(int i = enemies.size() -1; i>=0; i--){
+  /** Evaluar muerte de los enemigos */
+  public void checkPlayerCollision(Player jugador){
+    if (!hayEnemigos()) return;  // Si no hay enemigos salir
+    for(int i = this.enemies.size() -1; i>=0; i--){
       Enemy enemy = enemies.get(i);
-      if(enemy.collider(jugador)){
-        enemies.remove(i);
+      if(enemy.getCollider().isCircle(jugador)){
+        this.enemies.remove(i);
+        return;
       }
     }
+  }
+  
+  /* Devuelve si hay enemigos */
+  public boolean hayEnemigos(){
+    if(enemies.size() == 0){
+      return false;
+    }
+    return true;
   }
   
   /** Elimina a todos los enemigos de la lista */

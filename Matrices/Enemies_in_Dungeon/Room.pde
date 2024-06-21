@@ -50,8 +50,8 @@ class Room extends GameObject {
   }
 
   /** Metodo que verifica y actualiza el estado de las puertas*/
-  public void updateDoors(ArrayList<Enemy> enemies){
-    if(enemies.size() <= 0){
+  public void updateDoors(boolean hayEnemies){
+    if(!hayEnemies){
       stateDoors(true);
     }
   }

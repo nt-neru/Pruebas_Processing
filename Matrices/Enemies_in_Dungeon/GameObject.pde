@@ -4,10 +4,10 @@ abstract class GameObject {
   /** Representa la posición del objeto */
   protected PVector posicion;
   
-  /** Representa el ancho (Hitbox) del objeto */
+  /** Representa el ancho del objeto */
   protected int ancho; 
   
-  /** Representa el alto (Hitbox) del objeto */
+  /** Representa el alto del objeto */
   protected int alto;
   
   /* -- CONSTRUCTORES -- */
@@ -17,6 +17,12 @@ abstract class GameObject {
   public GameObject(PVector posicion, int ancho, int alto){
     this.ancho=ancho;
     this.alto=alto;
+    this.posicion=posicion;
+  }
+  
+  /** Constructor Parametrizado para objetos circulos */
+  public GameObject(PVector posicion, int ancho){
+    this.ancho=ancho;
     this.posicion=posicion;
   }
   
