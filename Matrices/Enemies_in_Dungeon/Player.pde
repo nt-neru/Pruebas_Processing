@@ -1,5 +1,5 @@
 /** Clase que representa al jugador */
-class Player extends GameObject{
+class Player extends GameObject {
   /** Representa la velocidad del jugador */
   private float speed;
   /** Representa la maxima velocidad del jugador */
@@ -35,7 +35,7 @@ class Player extends GameObject{
   /** Metodo que mueve al jugador */
   public void mover() {
     this.direccion.setOrigen(this.posicion);
-    
+
     float acceleration = 60;
     float deceleration = 10;
 
@@ -70,8 +70,8 @@ class Player extends GameObject{
     this.posicion.x = constrain(this.posicion.x, 0 + this.ancho, width - this.ancho);
     this.posicion.y = constrain(this.posicion.y, 0 + this.ancho, height - this.ancho);
   }// end mover
-  
-  
+
+
   public void checkCollisions(Room roomActual, EnemyManager enemies) {
     // Si en la habitacion actual no hay puertas salir
     if (roomActual.hasDoors() == false) return;
@@ -80,33 +80,31 @@ class Player extends GameObject{
       //Si colisiono con una puerta preparar nuevas posiciones
       if (door != null && door.isColliding(this)) {
         int newCol = this.col, newRow = this.row;
-        PVector newPos = new PVector(0,0);
+        PVector newPos = new PVector(0, 0);
         switch (door.direction) {
         case "UP":
           newRow = row - 1;
-          newPos = new PVector(width / 2,  height - this.ancho * 2);
+          newPos = new PVector(width / 2, height - this.ancho * 1.2);
           break;
         case "DOWN":
           newRow = row + 1;
-          newPos = new PVector(width / 2,  this.ancho * 2);
+          newPos = new PVector(width / 2, this.ancho * 1.2);
           break;
         case "LEFT":
           newCol = col - 1;
-          newPos = new PVector(width - this.ancho * 2,  height/2);
+          newPos = new PVector(width - this.ancho * 1.2, height/2);
           break;
         case "RIGHT":
           newCol = col + 1;
-          newPos = new PVector(this.ancho * 2,  height /2 );
+          newPos = new PVector(this.ancho * 1.2, height /2 );
           break;
         }
         //si la proxima habitacion esta en el rango de la matriz actualizar posiciones
         Room nextRoom = dungeon.getRoom(newCol, newRow);
         if (nextRoom != null) {
           updatePosition(newCol, newRow, newPos);
-          
-          // hay que generar a los enemigos cuando el jugador toque la puerta
-          enemies.removeEnemies();
-          enemies.generarFormacion(nextRoom.getNameRoom());
+          // Generar a los enemigos cuando el jugador toque la puerta
+          enemies.createEnemies(nextRoom);
         }
       }
     }
@@ -132,10 +130,10 @@ class Player extends GameObject{
   public Vector getDireccion() {
     return this.direccion;
   }
-  public int getCol(){
+  public int getCol() {
     return this.col;
   }
-  public int getRow(){
+  public int getRow() {
     return this.row;
   }
 

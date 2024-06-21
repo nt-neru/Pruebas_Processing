@@ -48,9 +48,20 @@ class Dungeon {
     int cont = 0;
     for (int i = 0; i < this.rows; i++) {
       for (int j = 0; j < this.cols; j++) {
-          this.rooms[i][j] = new Room(matriz[i][j], width+1, height+1, new PVector(0, 0), cont);
+        this.rooms[i][j] = new Room(matriz[i][j], width+1, height+1, new PVector(0, 0), cont);
         cont ++;
       }
+    }
+  }
+
+  public void displayRoom(Player jugador, EnemyManager enemies) {
+    Room roomActual = dungeon.getRoom(jugador.col, jugador.row);
+    if (roomActual != null) { // si existe:
+      roomActual.display();
+      roomActual.updateDoors(enemies.getEnemies());
+      // Verificar colisiones con las puertas
+      jugador.checkCollisions(roomActual, enemies);
+      enemies.checkEnemyCollision(jugador);
     }
   }
 

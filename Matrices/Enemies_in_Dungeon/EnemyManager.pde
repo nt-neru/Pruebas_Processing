@@ -2,17 +2,30 @@
 class EnemyManager {
   /** representa a los enemigos de una habitacion*/
   private ArrayList<Enemy> enemies;
+  /***/
+  private boolean[] enemigosGenerados;
 
   public EnemyManager() {
     enemies= new ArrayList();
+    enemigosGenerados = new boolean[8]; // por defecto se inicializan en falso
+  }
+
+  public void createEnemies(Room room) {
+    removeEnemies();
+    // Verificar si los enemigos ya han sido generados para esta habitación
+    if (enemigosGenerados[room.getNameRoom() ]) { // nameRoom - 1 porque los índices en el array comienzan desde 0
+      return; // Salir si ya han sido generados
+    }
+    generarFormacion(room.getNameRoom());
+    room.stateDoors(false);
   }
 
   public void generarFormacion(int nameRoom) {
     Enemy e;
     switch(nameRoom) {
-    case 1:
+    case 3:
       {// en la habitacion 1
-      int cantidadEnemies = 3;
+        int cantidadEnemies = 3;
         for (int i=0; i<cantidadEnemies; i++) {
           e= new Enemy();
           e.setPosicion(new PVector((i+1)*width/(cantidadEnemies+1), height/2));
@@ -22,7 +35,7 @@ class EnemyManager {
       }
     case 2:
       {// en la habitacion 2
-      int cantidadEnemies = 4;
+        int cantidadEnemies = 4;
         for (int i=0; i<cantidadEnemies; i++) {
           e= new Enemy();
           e.setPosicion(new PVector((i+1)*width/(cantidadEnemies+1), height/4));
@@ -35,47 +48,32 @@ class EnemyManager {
       // sin enemigos
       break;
     }//end Switch
+    // Marcar la habitación como generada
+    enemigosGenerados[nameRoom - 1] = true; // nameRoom - 1 porque los índices en el array comienzan desde 0
   }
-  
-  public void removeEnemies() {
-    enemies.clear(); // Eliminar los enemigos de la lista
-  }
+
+  /** Dibuja a los enemigos */
   public void display() {
     for (Enemy e : enemies) {
       e.display();
     }
-  }//end display
-
-  /*public void validarMuerte(Enemy e, int cantidadVidas) {
-    e.setCantidadVidas(cantidadVidas-=1);
-    if (cantidadVidas<=0) {
-      enemies.remove(e);
-      if (enemies.size()<=0) {
-        ESTADO=MaquinaEstados.GANANDO_JUEGO;
+  }
+  
+  public void checkEnemyCollision(Player jugador){
+    for(int i = enemies.size() -1; i>=0; i--){
+      Enemy enemy = enemies.get(i);
+      if(enemy.collider(jugador)){
+        enemies.remove(i);
       }
     }
-  }*/
-  /*public void collisionEnemies() {
-    for (int i= 0; i<enemies.size(); i++) {
-      Enemy e= enemies.get(i);
-      for (int j=i+1; j<enemies.size(); j++) {
-        Enemy other=enemies.get(j);
-        float distance= e.getPosition().dist(other.getPosition());
-        float radios= e.getRadio()+other.getRadio();
-        if (distance<radios) {
-          float angle=atan2(other.getPosition().y + e.getPosition().y, other.getPosition().x + e.getPosition().x);
-          float targetX=e.getPosition().x+ cos(angle)*radios;
-          float targetY=e.getPosition().y + sin(angle)*radios;
-          float ax= (targetX - other.getPosition().x)*0.02;
-          float ay= (targetY - other.getPosition().y)*0.02;
-          e.setVelocity(new PVector(ax, ay));
-          other.setVelocity(new PVector(-ax, -ay));
-        }
-      }
-    }
-  }//collisionEnemies*/
+  }
+  
+  /** Elimina a todos los enemigos de la lista */
+  public void removeEnemies() {
+    enemies.clear(); // Eliminar los enemigos de la lista
+  }
 
-  /**-------------------------Seccion metodos accesores-------------------------*/
+  /* -- ASESORES -- */
   public ArrayList<Enemy> getEnemies() {
     return enemies;
   }

@@ -3,20 +3,22 @@ class Enemy extends GameObject{
   protected float speed;
   protected float acceleration;
   protected float topSpeed; 
-  protected int cantidadVidas;
+  protected int lives;
   
   public Enemy(){
     this.posicion = new PVector(random(width-(width/3))+width/6,random(height- (height/2))+height/4);
-    this.ancho = 25;
+    this.ancho = 50;
     this.speed = 0;
     this.acceleration = 30;
     this.topSpeed= random(200,400);
+    this.lives = 5;
   }
   
   public void display(){
     fill(255,255,0);
-    circle(this.posicion.x,this.posicion.y,this.ancho*2);
-
+    circle(this.posicion.x,this.posicion.y,this.ancho);
+    fill(0);
+    text(lives,this.posicion.x, this.posicion.y);
   }
   public void move(){
     
@@ -39,10 +41,15 @@ class Enemy extends GameObject{
     this.posicion.y = constrain(this.posicion.y, 0 + this.ancho, height - this.ancho);
   }
   
-  public int getCantidadVidas(){
-    return cantidadVidas;
+  boolean collider(Player jugador){
+    float dist = dist(this.posicion.x, this.posicion.y, jugador.posicion.x, jugador.posicion.y);
+    return dist < (this.ancho + jugador.ancho )/2;
   }
-  public void setCantidadVidas(int cantidadVidas){
-    this.cantidadVidas=cantidadVidas;
+  
+  public int getLives(){
+    return lives;
+  }
+  public void setLives(int lives){
+    this.lives=lives;
   }
 }

@@ -24,16 +24,58 @@ public void draw()
 }
 
 void jugando() {
-  Room roomActual = dungeon.getRoom(jugador.col, jugador.row);
-  if (roomActual != null) { // si existe:
-    roomActual.display();
-    // Verificar colisionescon las puertas
-    jugador.checkCollisions(roomActual, enemies);
-  }
+  dungeon.displayRoom(jugador, enemies);
   jugador.display();
   jugador.mover();
   displayPlayerPosition();
   enemies.display();
+
+  //jugador.checkEnemyCollision(enemies.getEnemies());
+}
+
+void mostrarMenu() {
+  background(0, 0, 128);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(32);
+  text("MENU PRINCIPAL", width / 2, height / 2 - 40);
+  textSize(16);
+  text("Presiona ENTER para jugar", width / 2, height / 2);
+}
+
+void mostrarVictoria() {
+  background(0, 128, 0);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(32);
+  text("¡VICTORIA!", width / 2, height / 2 - 40);
+  textSize(16);
+  text("Presiona ENTER para volver al menú", width / 2, height / 2);
+}
+
+void mostrarDerrota() {
+  background(128, 0, 0);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(32);
+  text("DERROTA", width / 2, height / 2 - 40);
+  textSize(16);
+  text("Presiona ENTER para volver al menú", width / 2, height / 2);
+}
+
+boolean jugadorGana() {
+  if (jugador.row == 1) {
+    return true;
+  }
+  return false;
+}
+
+boolean jugadorPierde() {
+  // Comprueba si la columna del jugador es 3
+  if (jugador.col == 2) {
+    return true;
+  }
+  return false;
 }
 
 public void keyPressed() {
