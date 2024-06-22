@@ -11,10 +11,10 @@ class Door extends GameObject {
   /** Constructor por defecto */
   public Door(PVector posicion, String direction) {
     this.posicion = posicion;
-    this.ancho = 60;
+    this.ancho = 70;
     this.direction = direction;
     this.isOpen = true;
-    this.collider = new Collider(this.posicion,this.ancho);
+    this.collider = new Collider(this.posicion,this.ancho-5);
   }
   /* -- METODOS -- */
   /** Metodo que dibuja a la habitacion*/

@@ -63,7 +63,7 @@ class EnemyManager {
     if (!hayEnemigos()) return;  // Si no hay enemigos salir
     for(int i = this.enemies.size() -1; i>=0; i--){
       Enemy enemy = enemies.get(i);
-      if(enemy.getCollider().isCircle(jugador)){
+      if(enemy.getCollider().isCircle(jugador.getCollider())){
         this.enemies.remove(i);
         return;
       }

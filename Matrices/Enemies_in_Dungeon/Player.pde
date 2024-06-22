@@ -8,6 +8,8 @@ class Player extends GameObject {
   private Vector direccion;
   /** Representa la posicion del jugador con respecto a la dungeon*/
   private int col, row;
+  
+  private Collider collider;
 
   /* -- CONSTRUCTORES -- */
   /** Constructor por defecto */
@@ -20,6 +22,7 @@ class Player extends GameObject {
     this.speed = 0;
     this.topSpeed = 250;
     this.direccion = new Vector("down");
+    this.collider = new Collider(this.posicion, this.ancho-13);
   }
 
   /* -- METODOS -- */
@@ -28,6 +31,8 @@ class Player extends GameObject {
     stroke(0);
     fill(200, 30);
     circle(this.posicion.x, this.posicion.y, this.ancho);
+    this.collider.setPosicion(this.posicion);
+    this.collider.displayCircle(#FFB81F);
     textSize(20);
     fill(255);
   }
@@ -78,7 +83,7 @@ class Player extends GameObject {
 
     for (Door door : roomActual.doorList) {
       //Si colisiono con una puerta preparar nuevas posiciones
-      if (door != null && door.getCollider().isCircle(this) && door.getIsOpen()) {
+      if (door != null && door.getCollider().isCircle(this.collider) && door.getIsOpen()) {
         int newCol = this.col, newRow = this.row;
         PVector newPos = new PVector(0,0);
         switch (door.direction) {
@@ -135,6 +140,10 @@ class Player extends GameObject {
   }
   public int getRow(){
     return this.row;
+  }
+  
+  public Collider getCollider(){
+    return this.collider;
   }
 
   /* Setters */

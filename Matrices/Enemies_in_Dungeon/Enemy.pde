@@ -13,7 +13,7 @@ class Enemy extends GameObject{
     this.acceleration = 30;
     this.topSpeed= random(200,400);
     this.lives = 5;
-    this.collider = new Collider(this.posicion,this.ancho);
+    this.collider = new Collider(this.posicion,this.ancho-16);
   }
   
   public void display(){
