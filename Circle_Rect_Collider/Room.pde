@@ -28,9 +28,9 @@ class Room extends GameObject {
   public void createDoors() {
     // Comprobacion AND bit a bit para saber si hay una puerta en X direccion
     // Se comparan los bits del valor de la matriz con otro para limpiar bits
-    if ((this.posDoors & 1) != 0) this.doorList[0] = new Door( "UP");
-    if ((this.posDoors & 2) != 0) this.doorList[1] = new Door( "RIGHT");
-    if ((this.posDoors & 4) != 0) this.doorList[2] = new Door( "DOWN");
+    if ((this.posDoors & 1) != 0) this.doorList[0] = new Door("UP");
+    if ((this.posDoors & 2) != 0) this.doorList[1] = new Door("RIGHT");
+    if ((this.posDoors & 4) != 0) this.doorList[2] = new Door("DOWN");
     if ((this.posDoors & 8) != 0) this.doorList[3] = new Door("LEFT");
   }
 

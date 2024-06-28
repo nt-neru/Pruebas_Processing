@@ -104,7 +104,7 @@ class Player extends GameObject {
         switch (door.direction) {
         case "UP":
           newRow = row - 1;
-           newDoor= new Door("DOWN");
+          newDoor= new Door("DOWN");
           newPos = new PVector(newDoor.getPosicion().x, newDoor.getPosicion().y - newDoor.getAncho() * 1.05);
           break;
         case "DOWN":
