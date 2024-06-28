@@ -28,17 +28,17 @@ class Room extends GameObject {
   public void createDoors() {
     // Comprobacion AND bit a bit para saber si hay una puerta en X direccion
     // Se comparan los bits del valor de la matriz con otro para limpiar bits
-    if ((this.posDoors & 1) != 0) this.doorList[0] = new Door(new PVector(width / 2, 0), "UP");
-    if ((this.posDoors & 2) != 0) this.doorList[1] = new Door(new PVector(width, height / 2), "RIGHT");
-    if ((this.posDoors & 4) != 0) this.doorList[2] = new Door(new PVector(width / 2, height), "DOWN");
-    if ((this.posDoors & 8) != 0) this.doorList[3] = new Door(new PVector(0, height / 2), "LEFT");
+    if ((this.posDoors & 1) != 0) this.doorList[0] = new Door( "UP");
+    if ((this.posDoors & 2) != 0) this.doorList[1] = new Door( "RIGHT");
+    if ((this.posDoors & 4) != 0) this.doorList[2] = new Door( "DOWN");
+    if ((this.posDoors & 8) != 0) this.doorList[3] = new Door("LEFT");
   }
-  
-  public void createWalls(){
-    this.wallList[0] = new Wall(new PVector(200,200), 200, 200);
-    //this.wallList[1] = new Wall(new PVector(0,height-60), width, 60);
-    //this.wallList[2] = new Wall(new PVector(0,0), 60, height);
-    //this.wallList[3] = new Wall(new PVector(width-60, 0), 60, height);
+
+  public void createWalls() {
+    this.wallList[0] = new Wall(new PVector(0, 0), width, 60);           // arriba
+    this.wallList[1] = new Wall(new PVector(0, height-60), width, 60);   // abajo
+    this.wallList[2] = new Wall(new PVector(0, 0), 60, height);          // izquierda
+    this.wallList[3] = new Wall(new PVector(width-60, 0), 60, height);   // derecha
   }
 
   /** Metodo que dibuja a la puerta */
@@ -53,7 +53,7 @@ class Room extends GameObject {
       if (wall != null) wall.display();
     }
   }
-  
+
   /** Metodo que devuelve si hay puertas en la habitacion*/
   public boolean hasDoors() {
     for (Door door : this.doorList) {
@@ -64,8 +64,8 @@ class Room extends GameObject {
   }
 
   /** Metodo que verifica y actualiza el estado de las puertas*/
-  public void updateDoors(boolean hayEnemies){
-    if(!hayEnemies){
+  public void updateDoors(boolean hayEnemies) {
+    if (!hayEnemies) {
       stateDoors(true);
     }
   }

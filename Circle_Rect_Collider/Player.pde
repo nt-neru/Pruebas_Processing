@@ -38,6 +38,7 @@ class Player extends GameObject {
   }
 
   public void mover(Room roomActual) {
+    text("posicion"+this.posicion, 300, 30);
     this.direccion.setOrigen(this.posicion);
 
     float acceleration = 60;
@@ -79,15 +80,13 @@ class Player extends GameObject {
 
     for (Wall wall : roomActual.wallList) {
       if (wall == null) continue; // No se ejecutara esa iteración y se pasa a la siguiente
-
       // Verificar colisión en cada dirección
       if (this.collider.isCircRect(new Player(nuevaPosicion), wall)) {
         colision = true;
       }
     }
-
     // Si no hubo colisión, actualizar la posición del jugador
-    if (!colision) {
+    if (!colision) { // Esta afuera para no tener problemas con otras paredes
       this.posicion = nuevaPosicion;
     }
   }
@@ -101,22 +100,27 @@ class Player extends GameObject {
       if (door != null && door.getCollider().isCircle(this) && door.getIsOpen()) {
         int newCol = this.col, newRow = this.row;
         PVector newPos = new PVector(0, 0);
+        Door newDoor;
         switch (door.direction) {
         case "UP":
           newRow = row - 1;
-          newPos = new PVector(width / 2, height - this.ancho * 1.2);
+           newDoor= new Door("DOWN");
+          newPos = new PVector(newDoor.getPosicion().x, newDoor.getPosicion().y - newDoor.getAncho() * 1.05);
           break;
         case "DOWN":
           newRow = row + 1;
-          newPos = new PVector(width / 2, this.ancho * 1.2);
+          newDoor = new Door("UP");
+          newPos = new PVector(newDoor.getPosicion().x, newDoor.getPosicion().y + newDoor.getAncho() * 1.05);
           break;
         case "LEFT":
           newCol = col - 1;
-          newPos = new PVector(width - this.ancho * 1.2, height/2);
+          newDoor = new Door("RIGHT");
+          newPos = new PVector(newDoor.getPosicion().x - newDoor.getAncho() * 1.05, newDoor.getPosicion().y );
           break;
         case "RIGHT":
           newCol = col + 1;
-          newPos = new PVector(this.ancho * 1.2, height /2 );
+          newDoor = new Door("LEFT");
+          newPos = new PVector(newDoor.getPosicion().x + newDoor.getAncho()*1.05, newDoor.getPosicion().y );
           break;
         }
         //si la proxima habitacion esta en el rango de la matriz actualizar posiciones

@@ -3,7 +3,7 @@ public boolean W_PRESSED;
 public boolean D_PRESSED;
 public boolean S_PRESSED;
 public boolean A_PRESSED;
-public int nivel = 0;
+public int nivel = 1;
 public int estadoJuego = 0;
 
 private Dungeon dungeon;

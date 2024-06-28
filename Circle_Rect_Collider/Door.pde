@@ -8,12 +8,30 @@ class Door extends GameObject {
   private Collider collider;
 
   /* -- CONSTRUCTORES -- */
-  /** Constructor por defecto */
+  /** Constructor para puertas con posicion variada */
   public Door(PVector posicion, String direction) {
     this.posicion = posicion;
     this.ancho = 60;
     this.direction = direction;
     this.isOpen = true;
+    this.collider = new Collider(this.posicion,this.ancho);
+  }
+  /** Constructor para puertas con posiciones fijas */
+  public Door(String direction) {
+    this.ancho = 60;
+    this.direction = direction;
+    this.isOpen = true;
+    
+    if (this.direction.equals("UP")){
+      this.posicion = new PVector(width / 2, 35);
+    } else if(this.direction.equals("RIGHT")) {
+      this.posicion = new PVector(width-35, height / 2);
+    } else if(this.direction.equals("DOWN")){
+      this.posicion = new PVector(width / 2, height-35);
+    }else if (this.direction.equals("LEFT")){
+      this.posicion = new PVector(35, height / 2);
+    }
+    
     this.collider = new Collider(this.posicion,this.ancho);
   }
   /* -- METODOS -- */
