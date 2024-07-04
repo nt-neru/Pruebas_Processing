@@ -18,11 +18,11 @@ class Player extends GameObject {
   /** Constructor parametrizado */
   public Player(PVector posicion) {
     this.posicion = posicion;
-    this.ancho = 50;
+    this.ancho = 90;
     this.speed = 0;
     this.topSpeed = 250;
     this.direccion = new Vector("down");
-    this.collider = new Collider(this.posicion, this.ancho-13);
+    this.collider = new Collider(this.posicion, this.ancho-40);
   }
 
   /* -- METODOS -- */
@@ -72,8 +72,8 @@ class Player extends GameObject {
     this.posicion.add(this.direccion.getDestino().copy().mult(this.speed * Time.getDeltaTime(frameRate)));
 
     // Limitar el movimiento del jugador
-    this.posicion.x = constrain(this.posicion.x, 0 + this.ancho, width - this.ancho);
-    this.posicion.y = constrain(this.posicion.y, 0 + this.ancho, height - this.ancho);
+    //this.posicion.x = constrain(this.posicion.x, 0 + this.ancho, width - this.ancho);
+    //this.posicion.y = constrain(this.posicion.y, 0 + this.ancho, height - this.ancho);
   }// end mover
   
   /*

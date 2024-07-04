@@ -19,11 +19,11 @@ public class GestorBullets {
   /** Método para actualizar el estado de las balas */
   public void updateBullets() {
     fill(255);
-    text("Balas: "+bulletList.size(),30,30);
+    text("Balas: "+bulletList.size(), 30, 30);
     ArrayList<Bullet> removableBullets = new ArrayList<Bullet>();
-    
+
     for (Bullet bullet : this.bulletList) {
-      //bullet.mover();
+      bullet.mover();
       bullet.moverAng();
       bullet.display();
 
@@ -32,7 +32,16 @@ public class GestorBullets {
         removableBullets.add(bullet);
       }
     }
-    
+
     this.bulletList.removeAll(removableBullets);
   }
+
+  // Función para disparar balas
+  /*void dispararBalas() {
+    for (Bala b : balas) {
+      b.disparar();
+      balasDisparadas.add(b);
+    }
+    balas.clear(); // Limpiar la lista de balas en órbita
+  }*/
 }

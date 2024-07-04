@@ -2,6 +2,8 @@ class Boss extends Enemy {
   private boolean inCenter = true;
   private float tiempoInicio;
   private float tiempoProximoDisparo;
+  private int fase = 2;
+  int intervaloDisparo = 2000; // Intervalo de disparo en milisegundos
 
   public Boss() {
     this.posicion = new PVector(width/2, 50);
@@ -23,18 +25,40 @@ class Boss extends Enemy {
     this.direccion.setOrigen(posicion);
   }
   public void mover() {
-    if (inCenter) {
-      if (millis() - tiempoInicio > 2000) {
-        inCenter = false;
+    switch (fase) {
+    case 1:
+      if (inCenter) {
+        if (millis() - tiempoInicio > 2000) {
+          inCenter = false;
+        }
+      } else if (!inCenter) {
+        moverFase();
+        if (millis() > tiempoProximoDisparo) {
+          disparar();
+          tiempoProximoDisparo = millis() + int(random(3000, 6000));
+        }
       }
-    } else if (!inCenter) {
-      moverFase();
-      if (millis() > tiempoProximoDisparo) {
-        disparar();
-        tiempoProximoDisparo = millis() + int(random(3000, 6000));
+      break;
+    case 2:
+      moverHaciaCentro();
+      if (inCenter && millis() - tiempoInicio > intervaloDisparo) {
+        //dispararBalas();
+        llenarBalas();
+        tiempoInicio = millis();
       }
+      break;
+    default:
     }
   }
+
+  // Función para llenar balas
+  void llenarBalas() {
+    for (int i = 0; i < 8; i++) {
+      float angulo = TWO_PI / 8 * i;
+      gestorDisparos.addBullet(new Bullet(new PVector(posicion.x,posicion.y), angulo));
+    }
+  }
+
 
   public void moverFase() {
     if (this.direccion.obtenerMagnitud() != 0) {
@@ -44,12 +68,17 @@ class Boss extends Enemy {
     checkCollicionWall();
   }
 
-  public void checkCollicionWall() {
-    if ( this.posicion.x < 0 + this.ancho/2 || this.posicion.x > width - this.ancho/2) {
-      this.direccion.getDestino().x *= -1;
-      resetSpeed();
+  // Función para mover al enemigo hacia el centro en la fase 2
+  void moverHaciaCentro() {
+    PVector centro = new PVector(width / 2, height / 2);
+    this.direccion.setDestino(PVector.sub(centro, posicion));
+    float distancia = this.direccion.obtenerMagnitud();
+
+    if (distancia > 3) {
+      moverFase();//Mueve al subjefe hacia la direccion calculada
     }
   }
+
   public void disparar() {
     int numBalas = int(random(4, 8)); // Número aleatorio de balas entre 4 y 7
     for (int i = 0; i < numBalas; i++) {
@@ -74,19 +103,27 @@ class Boss extends Enemy {
       }
     }
   }
+
   public void embestir(Player player) {
     PVector newDireccion = new PVector(player.posicion.x - this.posicion.x, 0).normalize();
-    this.topSpeed = 500; // Velocidad de la embestida
+    this.topSpeed = 700; // Velocidad de la embestida
     this.direccion.setDestino(newDireccion);
   }
 
   public void checkCollitionPlayer(Player player) {
-    if (collider.isCircle(player)) {
+    if (collider.isCircle(player.getCollider())) {
       text("HAY COLICION ", 30, 400);
-      if(this.posicion.x - player.posicion.x < 1){
+      if (this.posicion.x - player.posicion.x < 1) {
         this.direccion.setDestino(new PVector(random(2) < 1 ? 1 : -1, 0).normalize());
         resetSpeed();
       }
+    }
+  }
+
+  public void checkCollicionWall() {
+    if ( this.posicion.x < 0 + this.ancho/2 || this.posicion.x > width - this.ancho/2) {
+      this.direccion.getDestino().x *= -1;
+      resetSpeed();
     }
   }
 
