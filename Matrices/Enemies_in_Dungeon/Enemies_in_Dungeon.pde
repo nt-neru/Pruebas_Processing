@@ -31,7 +31,6 @@ void jugando() {
   displayPlayerPosition();
   enemies.display();
 
-  //jugador.checkEnemyCollision(enemies.getEnemies());
 }
 
 public void keyPressed() {

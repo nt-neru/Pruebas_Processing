@@ -20,20 +20,20 @@ class EnemyManager {
     // Patrón 1: 3 enemigos alineados horizontalmente
     Patron patron1 = new Patron();
     addPosiciones(patron1, 3, height / 2);
-    patrones.add(patron1);
+    this.patrones.add(patron1);
 
     // Patrón 2: 8 enemigos alineados horizontalmente arriba y abajo
     Patron patron2 = new Patron();
     addPosiciones(patron2, 4, height / 3);
     addPosiciones(patron2, 4, height - height / 3);
-    patrones.add(patron2);
+    this.patrones.add(patron2);
     
     // Patrón 3: Enemigos en forma de triangulo
     Patron patron3 = new Patron();
     addPosicionUnica(patron3, width / 2, height / 3); 
     addPosiciones(patron3, 2, height / 2); 
     addPosiciones(patron3, 3, height - height / 3);
-    patrones.add(patron3);
+    this.patrones.add(patron3);
     
     // Aquí se pueden agregar mas patrones 
   }
@@ -64,7 +64,7 @@ class EnemyManager {
   public void generarFormacion(int nameRoom) {
     Enemy e;
     // Escoje un patron de la lista de patrones
-    Patron patronSeleccionado = patrones.get((int) random(patrones.size()));
+    Patron patronSeleccionado = this.patrones.get((int) random(this.patrones.size()));
 
     for (PVector posicion : patronSeleccionado.getPosiciones()) {
       e = new Enemy();
@@ -78,7 +78,7 @@ class EnemyManager {
 
   /** Dibuja a los enemigos */
   public void display() {
-    for (Enemy e : enemies) {
+    for (Enemy e : this.enemies) {
       e.display();
     }
   }
@@ -87,9 +87,12 @@ class EnemyManager {
   public void checkPlayerCollision(Player jugador) {
     if (!hayEnemigos()) return;  // Si no hay enemigos, salir
     for (int i = this.enemies.size() - 1; i >= 0; i--) {
-      Enemy enemy = enemies.get(i);
-      if (enemy.getCollider().isCircle(jugador.getCollider())) {
-        this.enemies.remove(i);
+      Enemy enemy = this.enemies.get(i);
+      if (enemy.getCollider().isCircle(jugador.getCollider()) && !enemy.getIsInvulnerable()) {
+        enemy.setLives(enemy.getLives()-1);
+        if (enemy.getLives() <= 0){
+          this.enemies.remove(i);
+        }
         return;
       }
     }
@@ -102,16 +105,16 @@ class EnemyManager {
 
   /** Elimina a todos los enemigos de la lista */
   public void removeEnemies() {
-    enemies.clear(); // Eliminar los enemigos de la lista
+    this.enemies.clear(); // Eliminar los enemigos de la lista
   }
 
   /* -- ASESORES -- */
   public ArrayList<Enemy> getEnemies() {
-    return enemies;
+    return this.enemies;
   }
 
   public int getCantidadEnemies() {
-    return enemies.size();
+    return this.enemies.size();
   }
 }
 
@@ -128,6 +131,6 @@ class Patron {
   }
 
   public ArrayList<PVector> getPosiciones() {
-    return posiciones;
+    return this.posiciones;
   }
 }
