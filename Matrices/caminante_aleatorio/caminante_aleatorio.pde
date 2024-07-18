@@ -1,12 +1,15 @@
 Matrix matrix1;
 Walker walker;
-int cols = int(random(7, 15)); // Número de columnas de la matriz
-int rows = int(random(7, 15)); // Número de filas de la matriz
+
+int cols = int(random(6, 15)); // Número de columnas de la matriz
+int rows = int(random(6, 15)); // Número de filas de la matriz
 int cellSize;
 int indexNonZero;
 
+boolean start = false;
+
 void setup() {
-  size(500, 500);
+  size(600, 600);
   cellSize = width / ((cols > rows) ? cols : rows); // se divide segun el maximo entre las cols y rows
 
   // Crear la matriz y el caminante
@@ -17,8 +20,8 @@ void setup() {
   indexNonZero = int(random(((cols > rows) ? cols : rows), (cols+rows)));
   println("Matriz de "+ rows+" , "+cols );
   println("Número objetivo de elementos diferentes de cero: " + indexNonZero);
-  
-  frameRate(4); // velocidad para ver el moviminto
+
+  frameRate(3); // velocidad para ver el moviminto
 }
 
 void draw() {

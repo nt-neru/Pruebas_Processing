@@ -14,17 +14,13 @@ class Matrix {
       }
     }
   }
-  /** Metodo que acualiza el valor en una celda especifica de la matriz */
-  public void update(int x, int y, int newValue) {
-    this.matrix[x][y] |= newValue; // Usa el operador OR bit a bit para comparar entre el valor que tenia el indice y el nuevo valor
-    display();
-  }
+  
   /** Metodo que devuelve la cantidad de celdas distintas a 0 */
   public int nonZeroCount() {
     int count = 0;
-    for (int i = 0; i < this.rows; i++) {
-      for (int j = 0; j < this.cols; j++) {
-        if (matrix[i][j] != 0) {
+    for (int[] row : matrix) {
+      for (int col : row) {
+        if (col != 0) {
           count++;
         }
       }
@@ -59,4 +55,32 @@ class Matrix {
       }
     }
   }
+  /** Metodo que muestra la matriz por consola */
+  public void printMatrix() {
+    for (int[] row : matrix) {
+      for (int col : row) {
+        print(col + " ");
+      }
+      println();
+    }
+  }
+  /** Metodo que agrega valores a las ponicion actual y la anterior*/
+  public void addValue(PVector lastPos, PVector currentPos, int value, int reverseValue){
+    // primero en Y porque recorremos la matriz segun las filas
+    combineValue(int(lastPos.y), int(lastPos.x), value); // Agregar el valor al indice actual
+    combineValue(int(currentPos.y), int(currentPos.x), reverseValue); // Agregar el valor al indice al que se movio
+    display();
+  }
+  
+  /** Metodo que combina los valores de una celda especifica de la matriz */
+  public void combineValue(int y, int x, int newValue) {
+    this.matrix[y][x] |= newValue; // Usa el operador OR bit a bit para comparar entre el valor que tenia el indice y el nuevo valor
+  }
+  
+  /* -- ASESORES -- */
+  public int getCols(){  return this.cols;  }
+  public int getRows(){  return this.rows;  }
+  /** Retorna el valor de un indice especifico */
+  public int getValue(int y, int x) {  return this.matrix[y][x];  }
+  
 }
