@@ -58,16 +58,14 @@ class EnemyManager {
       return; // Salir si ya han sido generados
     }
     generarFormacion(room.getNameRoom());
-    room.stateDoors(false); // Hay enemigos, cerrar puertas
   }
 
   public void generarFormacion(int nameRoom) {
-    Enemy e;
     // Escoje un patron de la lista de patrones
     Patron patronSeleccionado = this.patrones.get((int) random(this.patrones.size()));
 
     for (PVector posicion : patronSeleccionado.getPosiciones()) {
-      e = new Enemy();
+      Enemy e = new Enemy();
       e.setPosicion(posicion);
       this.enemies.add(e);
     }

@@ -48,18 +48,14 @@ class Player extends GameObject {
     this.speed = W_PRESSED || D_PRESSED || S_PRESSED || A_PRESSED ? this.speed+acceleration : this.speed-deceleration;
 
     //  Verificar si se están presionando las teclas 'w', 'a', 's' o 'd'
-    if (W_PRESSED) {
-      this.direccion = this.direccion.sumar(new Vector("up"));
-    }
-    if (S_PRESSED) {
-      this.direccion = this.direccion.sumar(new Vector("down"));
-    }
-    if (A_PRESSED) {
-      this.direccion = this.direccion.sumar(new Vector("left"));
-    }
-    if (D_PRESSED) {
-      this.direccion = this.direccion.sumar(new Vector("right"));
-    }
+    if (W_PRESSED) {  this.direccion = this.direccion.sumar(new Vector("up"));    }
+    
+    if (S_PRESSED) {  this.direccion = this.direccion.sumar(new Vector("down"));    }
+    
+    if (A_PRESSED) {  this.direccion = this.direccion.sumar(new Vector("left"));    }
+    
+    if (D_PRESSED) {  this.direccion = this.direccion.sumar(new Vector("right"));    }
+    
     this.direccion.display();
 
     if (this.direccion.obtenerMagnitud() != 0) {
@@ -76,7 +72,7 @@ class Player extends GameObject {
     this.posicion.y = constrain(this.posicion.y, 0 + this.ancho, height - this.ancho);
   }// end mover
   
-  
+  /** Metodo que verifica la colicion con una puerta */
   public void checkCollisions(Room roomActual, EnemyManager enemies) {
     // Si en la habitacion actual no hay puertas salir
     if (roomActual.hasDoors() == false) return;
@@ -86,6 +82,7 @@ class Player extends GameObject {
       if (door != null && door.getCollider().isCircle(this.collider) && door.getIsOpen()) {
         int newCol = this.col, newRow = this.row;
         PVector newPos = new PVector(0,0);
+        // En el trabajo CircleRectCollider este apartado esta mas entendible y se adapta la posicion de la puerta
         switch (door.direction) {
         case "UP":
           newRow = row - 1;
@@ -124,31 +121,19 @@ class Player extends GameObject {
   /* -- ASESORES -- */
   /* Getters */
   /** Devuelve la velocidad maxima del jugador */
-  public float getTopSpeed() {
-    return this.topSpeed;
-  }
-  /** Devuelve la velocidad del jugador */
-  public float getSpeed() {
-    return this.speed;
-  }
-  /** Devuelve la direccion del jugador */
-  public Vector getDireccion() {
-    return this.direccion;
-  }
-  public int getCol(){
-    return this.col;
-  }
-  public int getRow(){
-    return this.row;
-  }
+  public float getTopSpeed() {  return this.topSpeed;  }
   
-  public Collider getCollider(){
-    return this.collider;
-  }
+  /** Devuelve la velocidad del jugador */
+  public float getSpeed() {  return this.speed;  }
+  
+  /** Devuelve la direccion del jugador */
+  public Vector getDireccion() {  return this.direccion;  }
+  public int getCol(){  return this.col;  }
+  public int getRow(){  return this.row;  }
+  
+  public Collider getCollider(){  return this.collider;  }
 
   /* Setters */
   /** Asigna una nueva velocidad maxima al jugador */
-  public void setTopSpeed( float topSpeed) {
-    this.topSpeed = topSpeed;
-  }
+  public void setTopSpeed( float topSpeed) {  this.topSpeed = topSpeed;  }
 }

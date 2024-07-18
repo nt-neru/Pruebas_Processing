@@ -10,27 +10,24 @@ private Dungeon dungeon;
 private Player jugador;
 private EnemyManager enemies;
 
-public void setup()
-{
+public void setup(){
   size(900, 800);
-  dungeon = new Dungeon(nivel);
-  jugador = new Player(new PVector(width/2, height/2));
-  enemies = new EnemyManager(dungeon.getRows() * dungeon.getCols());
+  iniciarJuego();
 }
 
-public void draw()
-{
+public void draw(){
   println(frameRate);
-  jugando();
-}
-
-void jugando() {
+  
   dungeon.displayRoom(jugador, enemies);
   jugador.display();
   jugador.mover();
   displayPlayerPosition();
-  enemies.display();
+}
 
+public void iniciarJuego() {
+  dungeon = new Dungeon(nivel);
+  jugador = new Player(new PVector(width/2, height/2));
+  enemies = new EnemyManager(dungeon.getRows() * dungeon.getCols());
 }
 
 public void keyPressed() {
@@ -49,13 +46,6 @@ public void keyPressed() {
     D_PRESSED = true;
     break;
   }
-
-}
-
-void iniciarJuego() {
-  // Aqui deberiamos reiniciar el estado del juego
-  dungeon = new Dungeon(nivel);
-  jugador = new Player(new PVector(width/2, height/2));
 }
 
 public void keyReleased() {

@@ -59,9 +59,10 @@ class Dungeon {
     if (roomActual != null) { // si existe:
       roomActual.display();
       roomActual.updateDoors(enemies.hayEnemigos());
-      // Verificar colisiones con las puertas
+      // Verificar colisiones con las puertas y enemigos 
       jugador.checkCollisions(roomActual, enemies);
       enemies.checkPlayerCollision(jugador);
+      enemies.display();
     }
   }
 

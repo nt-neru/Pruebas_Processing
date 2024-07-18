@@ -51,9 +51,9 @@ class Room extends GameObject {
 
   /** Metodo que verifica y actualiza el estado de las puertas*/
   public void updateDoors(boolean hayEnemies){
-    if(!hayEnemies){
-      stateDoors(true);
-    }
+    if(hayEnemies){
+      stateDoors(false);
+    } else stateDoors(true);
   }
   /** Metodo que cierra o abre las puertas */
   public void stateDoors(boolean state) {
